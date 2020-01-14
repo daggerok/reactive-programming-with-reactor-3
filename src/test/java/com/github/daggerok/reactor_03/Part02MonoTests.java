@@ -14,7 +14,8 @@ class Part02MonoTests {
     void test_00() {
         Mono<String> mono = Mono.just(1)
                                 .map(integer -> "foo" + integer)
-                                .delayElement(Duration.ofMillis(100));
+                                .delayElement(Duration.ofMillis(100))
+                                .log();
         StepVerifier.create(mono)
                     .expectNext("foo1")
                     .verifyComplete();

@@ -33,7 +33,8 @@ class Part04TransformTests {
             return new User(username, firstName, lastName);
         };
         Mono<User> mono = Mono.just(new User("lola", "ololo", "trololo"))
-                              .map(transformer);
+                              .map(transformer)
+                              .log();
 
         StepVerifier.create(mono)
                     .assertNext(user -> {

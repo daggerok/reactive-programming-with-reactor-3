@@ -17,7 +17,8 @@ class Part03StepVerifierTests {
 
     @Test
     void test_05() {
-        StepVerifier.create(Mono.just(Collections.singletonMap("ololo", "trololo")))
+        StepVerifier.create(Mono.just(Collections.singletonMap("ololo", "trololo"))
+                                .log())
                     .assertNext(stringStringMap -> assertThat(stringStringMap.get("ololo")).isEqualTo("trololo"))
                     .verifyComplete();
     }
@@ -25,7 +26,8 @@ class Part03StepVerifierTests {
     @Test
     void test_06_time_manipulation() {
         Supplier<Flux<Integer>> supplier = () -> Flux.range(0, 3600)
-                                                     .delayElements(Duration.ofSeconds(1));
+                                                     .delayElements(Duration.ofSeconds(1))
+                                                     .log();
         StepVerifier.withVirtualTime(supplier)
                     .expectSubscription()
                     .thenAwait(Duration.ofSeconds(3600))

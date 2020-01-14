@@ -32,8 +32,8 @@ class Part01FluxTests {
                                  .map(d -> d * 2)
                                  .take(3)
                                  .onErrorResume(fallback)
-                                 .doAfterTerminate(incrementTerminate);
-
+                                 .doAfterTerminate(incrementTerminate)
+                                 .log();
         StepVerifier.create(flux)
                     .expectNext(2, 4, 6)
                     .verifyComplete();
@@ -48,7 +48,8 @@ class Part01FluxTests {
 
     @Test
     void test_02_fooBarFluxFromValues() {
-        Flux<String> fooBarFluxFromValues = Flux.just("foo", "bar");
+        Flux<String> fooBarFluxFromValues = Flux.just("foo", "bar")
+                                                .log();
 
         StepVerifier.create(fooBarFluxFromValues)
                     .expectNext("foo", "bar")
@@ -58,7 +59,8 @@ class Part01FluxTests {
     @Test
     void test_03_fooBarFluxFromList() {
         List<String> list = Arrays.asList("foo", "bar");
-        Flux<String> fooBarFluxFromList = Flux.fromIterable(list);
+        Flux<String> fooBarFluxFromList = Flux.fromIterable(list)
+                                              .log();
 
         StepVerifier.create(fooBarFluxFromList)
                     .expectNext("foo", "bar")
@@ -77,7 +79,8 @@ class Part01FluxTests {
     @Test
     void test_05_counter() {
         Flux<Long> counter = Flux.interval(Duration.ofMillis(100))
-                                 .take(10);
+                                 .take(10)
+                                 .log();
 
         StepVerifier.create(counter)
                     .expectNext(0L, 1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L)

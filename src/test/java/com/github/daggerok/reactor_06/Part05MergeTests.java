@@ -14,7 +14,8 @@ class Part05MergeTests {
         Flux<String> flux1 = Flux.just("ololo", "trololo");
         Flux<String> flux2 = Flux.just("1", "2", "3");
         Flux<String> flux3 = Flux.just(".", "..", "...");
-        Flux<String> mergedFlux = Flux.merge(flux1, flux2, flux3);
+        Flux<String> mergedFlux = Flux.merge(flux1, flux2, flux3)
+                                      .log();
 
         StepVerifier.create(mergedFlux)
                     // .expectSubscription()
@@ -28,7 +29,8 @@ class Part05MergeTests {
         Flux<String> flux1 = Flux.just("ololo", "trololo");
         Flux<String> flux2 = Flux.just("1", "2", "3");
         Flux<String> flux3 = Flux.just(".", "..", "...");
-        Flux<String> concatFlux = Flux.concat(flux1, flux2, flux3);
+        Flux<String> concatFlux = Flux.concat(flux1, flux2, flux3)
+                                      .log();
 
         StepVerifier.create(concatFlux)
                     .expectNext("ololo", "trololo",
@@ -41,7 +43,8 @@ class Part05MergeTests {
         Mono<String> mono1 = Mono.just("ololo");
         Mono<String> mono2 = Mono.empty();
         Flux<String> flux = Flux.just("trololo", "...");
-        Flux<String> concatMonoFlux = Flux.concat(mono1, mono2, flux);
+        Flux<String> concatMonoFlux = Flux.concat(mono1, mono2, flux)
+                                          .log();
 
         StepVerifier.create(concatMonoFlux)
                     .expectNext("ololo", "trololo", "...")
