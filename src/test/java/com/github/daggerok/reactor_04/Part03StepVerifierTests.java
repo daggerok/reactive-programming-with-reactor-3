@@ -26,8 +26,8 @@ class Part03StepVerifierTests {
     @Test
     void test_06_time_manipulation() {
         Supplier<Flux<Integer>> supplier = () -> Flux.range(0, 3600)
-                                                     .delayElements(Duration.ofSeconds(1))
-                                                     .log();
+                                                     .delayElements(Duration.ofSeconds(1))/*
+                                                     .log()*/;
         StepVerifier.withVirtualTime(supplier)
                     .expectSubscription()
                     .thenAwait(Duration.ofSeconds(3600))
